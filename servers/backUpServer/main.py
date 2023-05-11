@@ -2,7 +2,7 @@
 from flask import Flask
 
 app = Flask(__name__)
-
+port=5005
 @app.route('/')
 def hello():
     currnet_calls = 0
@@ -12,4 +12,7 @@ def hello():
 
 
 if __name__=='__main__':
-    app.run(debug=True,host='0.0.0.0', port=5005)
+    import os
+    os.system('cls||clear')
+    print(f"[x] backup server is up: {port}".upper())
+    app.run(port=port)

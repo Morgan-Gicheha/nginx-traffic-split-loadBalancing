@@ -30,7 +30,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/home/gicheha/Desktop/work/open-sourcing/nginx-traffic-split-loadBalancing/servers/backUpServer/venv"
+set -gx VIRTUAL_ENV "/home/gicheha/Desktop/projects/nginx-traffic-split-loadBalancing/servers/backUpServer/venv"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH

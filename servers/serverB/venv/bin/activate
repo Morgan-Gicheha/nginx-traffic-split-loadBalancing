@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/home/gicheha/Desktop/work/open-sourcing/nginx-traffic-split-loadBalancing/servers/serverB/venv"
+VIRTUAL_ENV="/home/gicheha/Desktop/projects/nginx-traffic-split-loadBalancing/servers/serverB/venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

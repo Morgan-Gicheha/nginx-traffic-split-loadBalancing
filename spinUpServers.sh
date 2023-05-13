@@ -17,25 +17,51 @@ bootServer() {
 bootNginx() {
 
     # running nginx container
-    gnome-terminal --geometry=200x20+0+720 --window --title="docker-Nginx-Server" -- bash -c "docker-compose up --build; $SHELL"
+    gnome-terminal --geometry=200x20+0+720 --window --title="docker-Nginx-Server" -- bash -c "docker-compose up --build --force-recreate; $SHELL"
 
 }
 
 openBrowser() {
+
     # opening browser
     xdg-open 'http://127.0.0.1:5001'
+    # BROWSER_PID=$!
+    # kill -9 $BROWSER_PID
+
 }
 
-spinner() {
-    PID=$!
-    i=1
-    sp="/-\|"
-    echo -n ' '
-    while [ -d /proc/$PID ]; do
-        printf "\b${sp:i++%${#sp}:1}"
+#https://www.shellscript.sh/examples/spinner/
+
+spin() {
+
+    spinner="/|\\-/|\\-"
+    while :; do
+        for i in $(seq 0 7); do
+
+            echo -n "${spinner:$i:1}"
+            echo -en "\010"
+            sleep .1
+        done
     done
 }
 
-spinner &
-bootServer&
-exit & exit
+echo "About to make a slow web call..."
+
+# Start the Spinner:
+spin &
+# Make a note of its Process ID (PID):
+SPIN_PID=$!
+# Kill the spinner on any signal, including our own exit.
+trap "kill -9 $SPIN_PID" $(seq 0 15)
+
+# webservice - it is deliberately slow!
+echo "[x]  Booting App Servers"
+bootServer
+echo "[x] Booting Nginx Server"
+bootNginx
+echo "[x] Waitig for Nginx to completely boot."
+sleep 5
+echo "opening broswer http://127.0.0.1:5001"
+openBrowser
+
+kill -9 $SPIN_PID
